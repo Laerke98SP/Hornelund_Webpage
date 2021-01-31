@@ -26,7 +26,20 @@ export const postUser = (req, res) => {
     var newId = uuidv4();
     var completeInfo = { ... userInfo, userId: newId };
     postingUser(completeInfo);
-    res.send(newId)
+    res.end(newId);
+
+    // try {
+    //     postingUser(completeInfo);
+    // } catch(error) {
+    //     res.send(error);
+    // }
+
+    // var status = postingUser(completeInfo);
+    // if (status == "Success"){
+    //     res.send(newId);
+    // } else {
+    //     res.send("User already exist in database");
+    // }
 };
 
 export const updateUser = (req, res) => {

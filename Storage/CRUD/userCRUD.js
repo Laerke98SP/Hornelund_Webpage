@@ -7,6 +7,16 @@ db.loadDatabase();
 export function postingUser(userInfo){
     var user = new User(userInfo.firstname, userInfo.lastname, userInfo.email, userInfo.dateOfBirth, userInfo.password, userInfo.userId);
     db.insert(user);
+    
+    // db.find({email: userInfo.email}, function(err, user){
+    //     if (user == []){
+    //         var user = new User(userInfo.firstname, userInfo.lastname, userInfo.email, userInfo.dateOfBirth, userInfo.password, userInfo.userId);
+    //         db.insert(user);
+    //     } else {
+    //         throw new Error('User alredy exists');
+    //     }
+    // });
+
 };
 
 export function updatingUser(usersId, usersInfo){
