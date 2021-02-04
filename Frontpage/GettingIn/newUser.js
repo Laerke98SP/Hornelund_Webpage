@@ -20,7 +20,6 @@ function createUser(){
 }
 
 
-
 function calculteAge(dob){
     var date = dob.split('-');
     var year = date[0];
@@ -46,10 +45,11 @@ function creatingUser(userInfo){
     };
     
     // Fetching the user endpoint with the created restrictions
-    fetch('http://localhost:3000/user', options).then(resp => resp.json).then(function(userId){
-        console.log(userId)
-        // res.json(response.jsonBody.businesses)
-        localStorage.setItem("userId", userId.newId);
-    });
+    fetch('http://localhost:3000/user', options).then(resp => {
+        //Needs to return it this way, so it is packaged as a json file
+        return resp.json();
+    }).then(data => {
+        localStorage.setItem('id', data.id)
+    })
 }
 
