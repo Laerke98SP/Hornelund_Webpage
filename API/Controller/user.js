@@ -26,9 +26,6 @@ export const postUser = (req, res) => {
     var newId = uuidv4();
     var completeInfo = { ... userInfo, userId: newId };
     postingUser(completeInfo);
-    console.log({
-        id: newId
-    })
     res.json({
         id: newId
     });
