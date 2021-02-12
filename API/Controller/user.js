@@ -1,8 +1,9 @@
 import nedb from 'nedb';
-import { v4 as uuidv4 } from 'uuid';
+// import { v4 as uuidv4 } from 'uuid';
 import { postingUser, updatingUser, deletingUser } from '../../Storage/CRUD/userCRUD.js';
+import { User } from '../Classes/User.js'
 
-var db = new nedb({ filename: '../Storage/Databases/userDatabase.db' })
+let db = new nedb({ filename: '../Storage/Databases/userDatabase.db' })
 
 export const getUsers = (req, res) => {
     db.loadDatabase();
@@ -15,21 +16,30 @@ export const getUser = (req, res) => {
     const usersId = req.params;
     db.loadDatabase();
     
-    db.find({userId: usersId.id}, function(err, user){
+    db.find({userId: usersId.userId}, function(err, user){
         res.send(user);
     });
 };
 
 export const postUser = (req, res) => {
-    const userInfo = req.body;
+    const userInfo = req.body; 
 
-    var newId = uuidv4();
-    var completeInfo = { ... userInfo, userId: newId };
-    postingUser(completeInfo);
-    res.json({
-        id: newId
-    });
+    let createdUser = new User( userInfo.firstname, userInfo.lastname, userInfo.email, userInfo.dateOfBirth, userInfo.password);
+    createdUser.calculateAge();
+    createdUser.createId();
+
+    if (createdUser.age < 18){
+        res.json('User not old enough');
+    } else {
+        postingUser(createdUser);
+        res.json({
+            id: createdUser.userId
+        });
+    }
 };
+
+
+
 
 export const updateUser = (req, res) => {
     const userId = req.params;

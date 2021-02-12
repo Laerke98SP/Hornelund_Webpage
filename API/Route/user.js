@@ -4,9 +4,10 @@ import { getUsers, getUser, postUser, updateUser, deleteUser } from '../Controll
 const router = express.Router();
 
 router.get('/', getUsers);
-router.get('/:id', getUser);
+router.get('/:userId', getUser);
 router.post('/', postUser);
-router.patch('/:id', updateUser);
-router.delete('/:id', deleteUser);
+router.patch('/:userId', updateUser);
+router.delete('/:userId', deleteUser);
+
 
 export default router;
